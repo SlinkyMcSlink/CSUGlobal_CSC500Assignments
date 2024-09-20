@@ -7,13 +7,13 @@ class ItemToPurchase:
         self.item_description = item_description
         
     def print_item_cost(self):
-        print('{} {} @ ${:.2f} = ${:.2f}'.format(self.item_name, self.item_quantity, self.item_price, self.total_cost()))
+        print('{} \n                {} @ ${:.2f} = ${:.2f}'.format(self.item_name, self.item_quantity, self.item_price, self.total_cost()))
         
     def total_cost(self):
         return self.item_price * self.item_quantity
         
     def get_description(self):
-        return '{}: {}'.format(self.item_name, self.item_description)
+        return '{}:\n              - {}'.format(self.item_name, self.item_description)
         
  
 # ShoppingCart class from Milestone 2 
@@ -25,57 +25,58 @@ class ShoppingCart:
     
     def add_item(ItemToPurchase):
         # TO DO IN ASSIGNMENT 8
-        print('Adding Items...')
+        print('    Adding Items...')
         print()
         return
         
     def remove_item(string):
         # TO DO IN ASSIGNMENT 8
-        print('Removing Items...')
+        print('    Removing Items...')
         print()
         return
         
     def modify_item(ItemToPurchase):
         # TO DO IN ASSIGNMENT 8
-        print('Modifying Items...')
+        print('    Modifying Items...')
         print()
         return
         
     def get_num_items_in_cart(self):
-        num_items = 0
-        for item in self.cart:
-            num_items += item.item_quantity
-        return num_items
+        return sum([i.item_quantity for i in self.cart])
     
     def get_cost_of_cart(self):
-        cost = 0
-        for item in self.cart:
-            cost += item.total_cost()
-        return cost
+        return sum([i.total_cost() for i in self.cart])
     
     def print_total(self):
         num_items = self.get_num_items_in_cart()
-        print('SHOPPING CART - CART CONTENTS')
+        print('          SHOPPING CART - CART CONTENTS')
+        print('-------------------------------------------------')
         print('{}\'s Shopping Cart - {}'.format(self.customer_name, self.current_date))
         print('Number of Items\'s: ', num_items)
+        print('-------------------------------------------------')
         if num_items > 0:
             for item in self.cart:
+                print('             ◊', end=' ')
                 item.print_item_cost()
-            print('Total: ${:.2f}'.format(self.get_cost_of_cart()))
+            print('\n              ********************')
+            print('                 Total: ${:.2f}'.format(self.get_cost_of_cart()))
+            print('              ********************')
         else:
-            print('SHOPPING CART IS EMPTY')
+            print('             SHOPPING CART IS EMPTY!')
         print()
         
     def print_descriptions(self):
-        print('SHOPPING CART - ITEM DESCRIPTIONS')
+        print('        SHOPPING CART - ITEM DESCRIPTIONS')
+        print('-------------------------------------------------')
         print('{}\'s Shopping Cart - {}'.format(self.customer_name, self.current_date))
-        print('Item Descriptions')
+        print('-------------------------------------------------')
         num_items = self.get_num_items_in_cart()
         if num_items > 0:
             for item in self.cart:
+                print('           ◊', end=' ')
                 print(item.get_description())
         else:
-            print('SHOPPING CART IS EMPTY')
+            print('             SHOPPING CART IS EMPTY!')
         print()
     
     # Added for Testing Purposes    
@@ -92,15 +93,18 @@ class ShoppingCart:
 def print_menu(cart):
     option = ''
     while option != 'q':
-        print('MENU')
-        print('a - Add item to cart')
-        print('r - Remove item from cart')
-        print('c - Change item quantity')
-        print('i - Output items\' descriptions')
-        print('o - Output shopping cart')
-        print('q - Quit')
-        option = input('Choose an option:\n')
-        print()
+        print('''
+                      MENU
+    ----------------------------------------
+        a - Add item to cart
+        r - Remove item from cart
+        c - Change item quantity
+        i - Output items\' descriptions
+        o - Output shopping cart
+        q - Quit
+    ----------------------------------------''')
+        option = input('    Choose an option: ')
+        print('\n')
         
         if option == 'a':
             cart.add_item()
@@ -117,9 +121,8 @@ def print_menu(cart):
         elif option != 'q':
             print('Invalid option, choose from the menu.')
 
-    
 def main():
-    cart = ShoppingCart('Jimmy Jones', 'Sept. 16th, 2024')
+    cart = ShoppingCart('Jimmy Johnson', 'Sept. 16th, 2024')
     print_menu(cart)
     
 
